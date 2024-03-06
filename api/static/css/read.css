@@ -1,11 +1,3 @@
-@font-face {
-    font-family: omu_dayebbeum;
-    src: url('/static/fonts/omu_dayebbeum.ttf');
-}
-* {
-    font-family: omu_dayebbeum;
-}
-
 header{
     background: #845212;
     position: absolute;
