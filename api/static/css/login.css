@@ -1,0 +1,17 @@
+.main-menu li{margin-right:29px;}
+
+.main-menu li:last-child{margin-right:60px;}
+
+.content{
+    padding-top: 150px;
+    height: 80rem;
+}
+
+.login-item{
+    margin: 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+@media all and (max-width:767px) {
+
+}

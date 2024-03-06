@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="/static/css/read.css">
+</head>
+<body class="position-relative">
+    <main class="container content bg-light">
+        {% if notice == 'ture' %}
+            <div class="row">
+                <div class="col-1">지난주</div>
+                <div class="col-10 text-center display-6">
+                    {{weeklist[0][0:4]}}년 {{weeklist[0][4:6]}}월 {{weeklist[0][6:8]}}일 ~ {{weeklist[4][0:4]}}년 {{weeklist[4][4:6]}}월 {{weeklist[4][6:8]}}일
+                </div>
+                <div class="col-1">다음주</div>
+            </div>
+            {% if VitalNoticedatas %}
+                <div class="table-responsive mt-5 h4">
+                    <table class="w-100">
+                        <thead>
+                            <tr class="text-center">
+                                <th scope="col">월</th>
+                                <th scope="col">화</th>
+                                <th scope="col">수</th>
+                                <th scope="col">목</th>
+                                <th scope="col">금</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for foods in VitalNoticedatas[0][0] %}
+                                <tr class="align-top">
+                                    {% for food in foods %} 
+                                        {% if foods[VitalNoticedatas[0][1][0]] == food %}
+                                            <td scope="row" class="today">
+                                                {% for meal in food %}
+                                                    {% if '아침' in meal or '점심' in meal or '저녁' in meal%}
+                                                        <strong>{{meal}}<br></strong>
+                                                    {% else %}
+                                                        {{meal}}<br>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        {% else %}
+                                            <td scope="row" class="">
+                                                {% for meal in food %}
+                                                    {% if '아침' in meal or '점심' in meal or '저녁' in meal%}
+                                                        <strong>{{meal}}<br></strong>
+                                                    {% else %}
+                                                        {{meal}}<br>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        {% else %}
+            {% if all_datas %}
+                {% for data in all_datas %}
+                    {% if data['id'] == p_id %}
+                        <div class="row text-center h1 pt-5">
+                            <div class="col-12">
+                                <p>
+                                    {{data['title']}}
+                                </p>
+                            </div>
+                            <div class="col-12" style="font-size: 18px; color: #888;">작성자</div>
+                        </div>
+                        <div class="text-center h4">
+                            <div class=""><textarea class="text-dark" style="width: 100%; resize: none; border: none;" disabled>{{data['content']}}</textarea></div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <p class="h5 text-center mt-5">
+                댓글
+            </p>
+            {% if all_comment %}
+                <script language="javascript">
+                    i=1;
+                </script>
+                {% for comments in all_comment %}
+                    {% if comments['write_id'] == p_id %}
+                        <div class="h4">
+                            <p>
+                                <script>document.write(i)</script>) {{comments['comment']}}
+                            </p>
+                        </div>
+                        <script>
+                            i=i+1;
+                        </script>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <div class="text-center container">
+                <form action="{{url_for('comment', p_id = p_id)}}" method = 'POST'>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <textarea class="form-control" name="comment" id="comment" rows="1" placeholder="댓글 작성"></textarea>
+                        </div>
+                        <div class="col-2">
+                            <input type="submit" value="작성">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </main>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="/static/css/read.css">
+<body class="position-relative">
+    <main class="text-center container content">
+        <form action="{{url_for('succese')}}" method="POST">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">글 제목</label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="제목">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">글 내용</label>
+                <textarea class="form-control" name="content" id="content" rows="20" placeholder="글 내용"></textarea>
+            </div>
+            <div>
+                <input type="submit" value="작성하기">
+            </div>
+        </form>
+    </main>
+</body>
+</html>
+
+{% endblock %}

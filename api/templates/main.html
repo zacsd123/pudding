@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="/static/js/main.js"></script>
+</head>
+<body class="position-relative">
+    <main>
+        <div class="container main-content">
+            <div class="notice">
+                <div class="row hstack mt-3 text-center position-relative">
+                    <div class="col-md-6 col-sm-12" style="height: 600px;">
+                        <span class="display-6">
+                            공지사항
+                        </span>
+                        <div class="vstack h4">
+                            <div class="row fw-bold">
+                                <div class="col-2 p-2 text-center">#</div>
+                                <div class="col-10 p-2">제목</div>
+                            </div>
+                            {% for NoticeData in Noticedatas %}
+                                {% if NoticeData['important'] == 1 %}
+                                    <a href="/read/{{NoticeData['id']}}/?notice=ture" class="navbar-brand VitalNotice row Hover">
+                                        <div class="col-2 p-2 text-center">{{NoticeData['id']}}</div>
+                                        <div class="col-10 p-2">
+                                            <div>
+                                                {{NoticeData['notice']}}
+                                            </div>
+                                        </div>
+                                    </a>
+                                {% else %}
+                                <div class="row">
+                                    <div class="col-2 p-2 text-center">{{NoticeData['id']}}</div>
+                                    <div class="col-10 p-2">
+                                        <a href="/read/{{NoticeData['id']}}/?notice=false" class="navbar-brand">{{NoticeData['notice']}}</a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+    
+                    <div class="hline">
+                    </div>
+    
+                    <div class="col-md-6 col-sm-12" style="height: 600px;">
+                        <span class="display-6">
+                            업데이트
+                        </span>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content mt-3">
+                <div class="text-center w-100">
+                    <span class="display-6">
+                        게시글
+                    </span>
+                </div>
+                <div class="vstack">
+                    <div class="row fw-bold">
+                        <div class="col-2 p-2 text-center">#</div>
+                        <div class="col-6 p-2">제목</div>
+                        <div class="col-2 p-2 text-center">조회수</div>
+                        <div class="col-2 p-2 text-center">좋아요</div>
+                    </div>
+                    {% for data in page_datas %}
+                        <div class="row Hover">
+                            <div class="col-2 p-2 text-center">{{data['id']}}</div>
+                            <div class="col-6 p-2 text-truncate">
+                                <a href="/read/{{data['id']}}/?notice=false" class="navbar-brand">
+                                    <div>
+                                        {{data['title']}}
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-2 p-2 text-center">{{data['view']}}</div>
+                            <div class="col-2 p-2 text-center">{{data['good']}}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- 페이지 네이션 -->
+                {% if page_datas %}
+                <div class="Page">
+                    {% if page - 10 > 0 %}
+                        <a class="page-item" href="/?page={{block_start-1}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16"><path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg>
+                        </a>
+                    {% else %}
+                        <a class="page-item-donot">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16"><path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg>
+                        </a>
+                    {% endif %}
+                    {% if page - 1 > 0 %}
+                        <a class="page-item" href="/?page={{page-1}}">
+                            <svg class="page-item-img" xmlns="http://www.w3.org/2000/svg"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg>
+                        </a>
+                    {% else %}
+                        <a class="page-item-donot">
+                            <svg class="page-item-img" xmlns="http://www.w3.org/2000/svg"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg>
+                        </a>
+                    {% endif %}
+                    {% for i in range(block_start, block_end + 1) %}
+                        {% if i < last_page_num + 1 %}
+                            {% if i == page %}
+                                <a class="page-item-activity" href="/?page={{i}}">{{i}}</a>
+                            {% else %}
+                                <a class="page-item" href="/?page={{i}}">{{i}}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if page < last_page_num %}
+                        <a class="page-item" href="/?page={{page+1}}">
+                            <svg class="page-item-img" xmlns="http://www.w3.org/2000/svg"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg>
+                        </a>
+                    {% else %}
+                        <a class="page-item-donot">
+                            <svg class="page-item-img" xmlns="http://www.w3.org/2000/svg"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg>
+                        </a>
+                    {% endif %}
+                    {% if page < last_page_num-9 %}
+                        <a class="page-item" href="/?page={{block_end+1}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16"><path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg>
+                        </a>
+                    {% else %}
+                        <a class="page-item-donot">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16"><path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg>
+                        </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
+{% endblock %}

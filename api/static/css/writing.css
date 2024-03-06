@@ -1,0 +1,87 @@
+@font-face {
+    font-family: omu_dayebbeum;
+    src: url('/static/fonts/omu_dayebbeum.ttf');
+}
+* {
+    font-family: omu_dayebbeum;
+}
+
+header{
+    background: #845212;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    right: 0;
+    padding: 30px 0;
+    transition: 0.5s;
+}
+header.sticky{
+    position: fixed; 
+    padding: 2px 0;
+    background: #ffe078;
+    color: black;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+    transition: 0.5s;
+}
+
+header span{
+    text-decoration: none;
+    color: #ffffff;
+}
+header.sticky div a span{
+    color: #000;
+    text-decoration: none;
+}
+
+header span img{
+    color: wheat;
+}
+header.sticky span img{
+    filter: invert(100%) sepia(0%) saturate(24%) hue-rotate(114deg) brightness(108%) contrast(108%);
+    
+}
+
+header div nav{float: right;}
+
+header div nav ul{float: left;}
+
+header div nav ul li{float: left; list-style: none;}
+
+header div nav ul li a{
+    line-height: 56px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.main-menu li{margin-right:29px;}
+
+.main-menu li:last-child{margin-right:60px;}
+
+.content{
+    padding-top: 150px;
+    height: 80rem;
+}
+
+footer{
+    height: 200px;
+    background-color: rgb(255, 253, 239);
+}
+
+@media all and (max-width:767px) {
+    .hline{
+        display: none;
+    }
+    .main-content{
+        height:2350px;
+        padding-top: 150px;
+    }
+    .content{
+        height: 44%;
+    }
+    .Page{
+        position: absolute;
+        bottom: 0%;
+        width: 100%;
+        transform: translateY(0%);
+    }
+}
